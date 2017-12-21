@@ -91,4 +91,4 @@ def people_list():
     }
 
     """
-    return ' return json of people + metadata, with request args: %s' % str(dict(flask.request.args))
+    return 'TODO return json of people + metadata, with request args: %s' % str(dict(flask.request.args))
