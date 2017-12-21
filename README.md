@@ -71,8 +71,21 @@ Hints
 - reuse some functions of the people API, (maybe put those 'helper' function in a new file??)
 
 
-## Ex. 3
+## Ex. 3 People overview in HTML
+With Jinja2 you can render html templates. Your goals is to get an overview of all people on this page.
 
+Do this by performing following steps:
+- call your own api `get many people` function.
+- extract the json of this response object (hints: use `response` attr of this object)
+- transform this json into a dict with `json.loads`
+- extract `people` from this dict
+- pass this value to your template
+- in your template loop over this dict (hint: Try to find out how this works in jinja2 docs)
+- print the people dynamically
 
+extra
+- Can you make filtering/pagination work for these routes? (hint: or can you explain why this already works?)
+- Can you display the correct time (in ISO format) this page was rendered. (hint: try to find a library that does this & pass this variable to your template)
 
-
+## Ex. 4 Tasks overview in HTML
+Can you do Ex. 3 but then for tasks?
