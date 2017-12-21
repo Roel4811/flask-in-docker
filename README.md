@@ -24,7 +24,7 @@ This will walk through the steps to get a Flask App running locally, with autore
 
 
 # Exercises
-The goal of these exercises are to learn some python + flask.
+The goal of these exercises are to learn some python + flask. Make sure your code is clean as described in the style guide.
 
 
 ## Ex. 1 Finish the people API
@@ -92,7 +92,8 @@ Do this by performing following steps:
 - print the people dynamically
 
 ### extra
-- Can you make filtering/pagination work for these routes? (hint: or can you explain why this already works?)
+- Can you make filtering/pagination work for these routes? A route could be: `/people/?name=Peter`
+  - hint: or can you explain why this already works?
 - Can you display the correct time (in ISO format) this page was rendered. (hint: try to find a library that does this & pass this variable to your template)
 - Can you put this time in the meta data of your api routes as well? Make sure it's DRY!
 
