@@ -28,7 +28,7 @@ The goal of these exercises are to learn some python + flask.
 
 
 ## Ex. 1 Finish the people API
-In the function descriptions (of `api/people.py`) is described what it should do. Your job to make sure it does!
+In the function descriptions (in `api/people.py`) is described what it should do. Your job to make sure it does!
 
 Hints:
 - Try to use build-in python functions where you can.
