@@ -32,7 +32,7 @@ Hints:
 
 ## Ex. 2 Create a tasks API, in a new file `api/tasks.py`
 Use the following fixtures
-
+```
 static_tasks = {
     'id': 1,
     'name': 'Clean up',
@@ -49,6 +49,7 @@ static_tasks = {
     'name': 'programming some Flask',
     'status': 'work in progress',
 }
+```
 
 Requirements
 - create a get single API
