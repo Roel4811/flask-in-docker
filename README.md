@@ -1,11 +1,12 @@
 # Simple Python Flask Dockerized Application
 This will walk through the steps to get a Flask App running locally, with autoreload
 
-- 1. fork this dir to your own GH account
-- 2. clone it
-- 3. go to web dir
-- 4. run `docker-compose up`
-- 5. go to `127.0.0.1:5000` (if it doesn't work, you can run `docker-machine ip`, this might be the IP you have to use)
+- 1. Install Docker https://www.docker.com/docker-toolbox
+- 2. fork this repo to your own GH account
+- 3. clone it
+- 4. go to web dir of this repo
+- 5. run `docker-compose up`
+- 6. go to `127.0.0.1:5000` (if it doesn't work, you can run `docker-machine ip`, this might be the IP you have to use)
 
 # To install new libraries
 - `Add them to requirements.txt`
@@ -18,6 +19,8 @@ This will walk through the steps to get a Flask App running locally, with autore
 - Use descriptive file names, e.g. `index` instead of `i`
 - Try to keep it DRY
 - Use comments where needed
+- Don't commit to master, but make a new branch. This way your PR can be reviewed
+
 
 # Exercises
 
@@ -33,7 +36,7 @@ Hints:
 ## Ex. 2 Create a tasks API, in a new file `api/tasks.py`
 Use the following fixtures
 ```
-static_tasks = {
+static_tasks = [{
     'id': 1,
     'name': 'Clean up',
     'status': 'done'
@@ -48,7 +51,7 @@ static_tasks = {
     'id': 3,
     'name': 'programming some Flask',
     'status': 'work in progress',
-}
+}]
 ```
 
 Requirements
@@ -75,7 +78,7 @@ Hints
 With Jinja2 you can render html templates. Your goals is to get an overview of all people on this page.
 
 Do this by performing following steps:
-- call your own api `get many people` function.
+- call your own api `get many people` FUNCTION.
 - extract the json of this response object (hints: use `response` attr of this object)
 - transform this json into a dict with `json.loads`
 - extract `people` from this dict
@@ -83,9 +86,14 @@ Do this by performing following steps:
 - in your template loop over this dict (hint: Try to find out how this works in jinja2 docs)
 - print the people dynamically
 
-extra
+### extra
 - Can you make filtering/pagination work for these routes? (hint: or can you explain why this already works?)
 - Can you display the correct time (in ISO format) this page was rendered. (hint: try to find a library that does this & pass this variable to your template)
 
 ## Ex. 4 Tasks overview in HTML
 Can you do Ex. 3 but then for tasks?
+
+## Ex. 5 Can you add more functionality to this app?
+For inspiration, check other tutorials. Feel fry to install other libraries etc.
+
+
