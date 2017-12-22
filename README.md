@@ -83,6 +83,7 @@ Hints
 With Jinja2 you can render html templates. Your goal is to get an overview of all people on this page.
 
 Do this by performing following steps:
+- update the `people_route` function in `app.py`
 - call your own api `get many people` FUNCTION.
 - extract the json of this response object (hints: use `response` attr of this object)
 - transform this json into a dict with `json.loads`
