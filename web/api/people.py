@@ -28,7 +28,6 @@ static_people = [
     }
 ]
 
-
 @blueprint.route('/<int:person_id>')
 def person_item(person_id):
     """Return a person, based on id
@@ -49,6 +48,8 @@ def person_item(person_id):
     for person in static_people:
         if person['id'] == person_id:
             return jsonify(person)
+        else:
+            return jsonify(no_person_found())
 
 @blueprint.route('/')
 def people_list():
@@ -94,3 +95,9 @@ def people_list():
 
     """
     return 'TODO return json of people + metadata, with request args: %s' % str(dict(flask.request.args))
+
+def no_person_found():
+    return {
+        'code': 404,
+        'message': "Person not found"
+    }
