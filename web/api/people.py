@@ -3,6 +3,7 @@
 The people API
 """
 import flask
+from flask import jsonify
 
 blueprint = flask.Blueprint('people', __name__, url_prefix='/api/people')
 
@@ -28,7 +29,7 @@ static_people = [
 ]
 
 
-@blueprint.route('/<person_id>')
+@blueprint.route('/<int:person_id>')
 def person_item(person_id):
     """Return a person, based on id
 
@@ -45,8 +46,9 @@ def person_item(person_id):
     }
 
     """
-    return 'TODO return json of person with id: %s' % person_id
-
+    for person in static_people:
+        if person['id'] == person_id:
+            return jsonify(person)
 
 @blueprint.route('/')
 def people_list():
