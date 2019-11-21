@@ -4,6 +4,7 @@ The people API
 """
 import flask
 from flask import jsonify
+import math
 
 blueprint = flask.Blueprint('people', __name__, url_prefix='/api/people')
 
@@ -94,10 +95,35 @@ def people_list():
     }
 
     """
-    return 'TODO return json of people + metadata, with request args: %s' % str(dict(flask.request.args))
+    sort_param = flask.request.args.get('sort_by') or 'Not Set'
+    page_number = flask.request.args.get('page_number') or 0
+    people = search_people()
+
+    return jsonify({
+        'people': sorted(people, key = lambda person: person[sort_param]),
+        'meta_data': {
+            'total_results': len(people),
+            'total_pages': math.ceil(len(people) / 2.0),
+            'page_number': page_number,
+            'sort_by': sort_param,
+            'filters': filter_params()
+        }
+    })
+
+def search_people():
+    result = []
+    for filter_param in filter_params():
+        if filter == 'email':
+            result += filter(lambda person: flask.request.args.get('email') == person['email'], static_people)
+        else:
+            result += filter(lambda person: flask.request.args.get(filter_param) in person[filter_param], static_people)
+        return result
+
+def filter_params():
+    return filter(lambda filter_param: filter_param in flask.request.args, ['first_name', 'last_name', 'email'])
 
 def no_person_found():
     return {
         'code': 404,
-        'message': "Person not found"
+        'message': 'Person not found'
     }
