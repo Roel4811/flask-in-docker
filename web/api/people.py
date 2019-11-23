@@ -4,6 +4,7 @@ The people API
 """
 import flask
 from flask import jsonify
+from flask import abort
 import math
 
 blueprint = flask.Blueprint('people', __name__, url_prefix='/api/people')
@@ -50,7 +51,7 @@ def person_item(person_id):
         if person['id'] == person_id:
             return jsonify(person)
         else:
-            return jsonify(no_person_found())
+            abort(404, {'message': 'Person not found'})
 
 @blueprint.route('/')
 def people_list():
@@ -97,14 +98,16 @@ def people_list():
     """
     sort_param = flask.request.args.get('sort_by') or 'Not Set'
     page_number = flask.request.args.get('page_number') or 0
+    results_per_page = flask.request.args.get('results_per_page') or 2
     people = search_people()
 
     return jsonify({
         'people': sorted(people, key = lambda person: person[sort_param]),
         'meta_data': {
             'total_results': len(people),
-            'total_pages': math.ceil(len(people) / 2.0),
+            'total_pages': math.ceil(len(people) / results_per_page),
             'page_number': page_number,
+            'results_per_page': results_per_page,
             'sort_by': sort_param,
             'filters': filter_params()
         }
@@ -121,9 +124,3 @@ def search_people():
 
 def filter_params():
     return filter(lambda filter_param: filter_param in flask.request.args, ['first_name', 'last_name', 'email'])
-
-def no_person_found():
-    return {
-        'code': 404,
-        'message': 'Person not found'
-    }
