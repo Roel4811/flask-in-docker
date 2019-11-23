@@ -32,7 +32,7 @@ static_tasks = [
 def task_item(task_id):
     for task in static_tasks:
         if task['id'] == task_id:
-            return jsonify(task)
+            return jsonify({'task': task})
         else:
             abort(404, {'message': 'Task not found'})
 
