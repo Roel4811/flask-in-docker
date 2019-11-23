@@ -41,10 +41,10 @@ def task_item(task_id):
 def tasks_list():
     like_filters = filter_params(['name'])
     equal_filters = filter_params(['status'])
-    sort_param = str(flask.request.args.get('sort_by'))
+    sort_param = flask.request.args.get('sort_by')
     sort_direction = str(flask.request.args.get('sort_direction'))
-    page_number = int(flask.request.args.get('page_number')) or 0
-    results_per_page = int(flask.request.args.get('results_per_page')) or 1
+    page_number = int(flask.request.args.get('page_number')) if flask.request.args.get('page_number') else 0
+    results_per_page = int(flask.request.args.get('results_per_page')) if flask.request.args.get('results_per_page') else 2
 
     tasks = search_records(static_tasks, like_filters, equal_filters) or []
     tasks = sort_records(tasks, sort_param, reverse = True if sort_direction == 'desc' else False)
@@ -60,6 +60,7 @@ def tasks_list():
             'page_number': page_number,
             'results_per_page': results_per_page,
             'sort_by': sort_param,
+            'sort_direction': sort_direction,
             'filters': like_filters + equal_filters
         }
     })
