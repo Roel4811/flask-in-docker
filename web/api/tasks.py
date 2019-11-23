@@ -42,11 +42,12 @@ def tasks_list():
     like_filters = filter_params(['name'])
     equal_filters = filter_params(['status'])
     sort_param = str(flask.request.args.get('sort_by'))
+    sort_direction = str(flask.request.args.get('sort_direction'))
     page_number = int(flask.request.args.get('page_number')) or 0
     results_per_page = int(flask.request.args.get('results_per_page')) or 1
 
     tasks = search_records(static_tasks, like_filters, equal_filters) or []
-    tasks = sort_records(tasks, sort_param)
+    tasks = sort_records(tasks, sort_param, reverse = True if sort_direction == 'desc' else False)
 
     total_pages = calc_total_pages(tasks, results_per_page)
     tasks_per_page = calc_records_on_page_number(tasks, page_number, results_per_page)

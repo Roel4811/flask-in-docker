@@ -26,9 +26,9 @@ def equal_filter(dict_list, value):
 def like_filter(dict_list, value):
     return filter(lambda element: flask.request.args.get(value) in element[value], dict_list)
 
-def sort_records(dict_list, sort_column):
+def sort_records(dict_list, sort_column, reverse = False):
     if sort_column and dict_list:
-        return sorted(dict_list, key = lambda record: record[sort_column]) if sort_column and dict_list else []
+        return sorted(dict_list, key = lambda record: record[sort_column], reverse=reverse)
     else:
         return dict_list
 

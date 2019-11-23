@@ -44,11 +44,12 @@ def people_list():
     like_filters = filter_params(['first_name', 'last_name'])
     equal_filters = filter_params(['email'])
     sort_param = str(flask.request.args.get('sort_by'))
+    sort_direction = str(flask.request.args.get('sort_direction'))
     page_number = int(flask.request.args.get('page_number')) or 0
     results_per_page = int(flask.request.args.get('results_per_page')) or 2
 
     people = search_records(static_people, like_filters, equal_filters) or []
-    people = sort_records(people, sort_param)
+    people = sort_records(people, sort_param, reverse = True if sort_direction == 'desc' else False)
 
     total_pages = calc_total_pages(people, results_per_page)
     people_per_page = calc_records_on_page_number(people, page_number, results_per_page)
