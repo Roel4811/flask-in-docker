@@ -8,6 +8,8 @@ from flask import Flask
 import flask
 import api
 import json
+from api.people import people_list
+from datetime import datetime
 
 
 def init_app(app):
@@ -34,7 +36,11 @@ def index_route():
 @app.route('/people')
 def people_route():
     """Nice page to show people"""
-    return flask.render_template('people.html', title='My People')
+    response = people_list()
+    data = json.loads(response.get_data())
+    people = data['people']
+    time = datetime.now().isoformat()
+    return flask.render_template('people.html', title = "my people", people = people, time = time)
 
 
 if __name__ == '__main__':

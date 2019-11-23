@@ -1,0 +1,13 @@
+<h1> {{title}} </h1>
+
+<ul>
+{% for task in tasks %}
+  <li>id: {{ task.id }}</li>
+  <li>first_name: {{ task.first_name }}</li>
+  <li>last_name: {{ task.last_name }}</li>
+  <li>email: {{ task.email }}</li>
+  <hr>
+{% endfor %}
+</ul>
+
+<h5>Time this page with rendered: {{ time }}</h5>
