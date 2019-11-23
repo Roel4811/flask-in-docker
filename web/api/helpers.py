@@ -28,7 +28,7 @@ def like_filter(dict_list, value):
 
 def sort_records(dict_list, sort_column, reverse = False):
     if sort_column and dict_list:
-        return sorted(dict_list, key = lambda record: record[sort_column], reverse=reverse)
+        return sorted(dict_list, key = lambda record: record[sort_column], reverse = reverse)
     else:
         return dict_list
 
