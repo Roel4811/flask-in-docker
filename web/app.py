@@ -9,6 +9,7 @@ import flask
 import api
 import json
 from api.people import people_list
+from api.tasks import tasks_list
 from datetime import datetime
 
 
@@ -41,6 +42,16 @@ def people_route():
     people = data['people']
     time = datetime.now().isoformat()
     return flask.render_template('people.html', title = "my people", people = people, time = time)
+
+
+@app.route('/tasks')
+def tasks_route():
+    """Nice page to show tasks"""
+    response = tasks_list()
+    data = json.loads(response.get_data())
+    tasks = data['tasks']
+    time = datetime.now().isoformat()
+    return flask.render_template('tasks.html', title = "my tasks", tasks = tasks, time = time)
 
 
 if __name__ == '__main__':
