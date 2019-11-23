@@ -9,8 +9,10 @@ def search_records(dict_list, like_filters = [], equal_filters = []):
     result = []
     if equal_filters:
         [result.extend(equal_filter(dict_list, value)) for value in equal_filters if equal_filters]
-    else:
+    elif like_filters:
         [result.extend(like_filter(dict_list, value)) for value in like_filters if like_filters]
+    else: # return all records if no filters are given
+        result = dict_list
     return result
 
 def filter_params(filter_list):
