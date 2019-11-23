@@ -7,13 +7,14 @@ Fetching
 
 def search_records(dict_list, like_filters = [], equal_filters = []):
     result = []
-    [result.extend(equal_filter(dict_list, value)) for value in equal_filters if equal_filters]
-    [result.extend(like_filter(dict_list, value)) for value in like_filters if like_filters]
+    if equal_filters:
+        [result.extend(equal_filter(dict_list, value)) for value in equal_filters if equal_filters]
+    else:
+        [result.extend(like_filter(dict_list, value)) for value in like_filters if like_filters]
     return result
 
 def filter_params(filter_list):
     return filter(lambda filter_param: filter_param in flask.request.args, filter_list)
-
 
 """
 Filtering + Sorting
