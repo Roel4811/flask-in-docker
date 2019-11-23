@@ -5,7 +5,7 @@ The tasks API
 import flask
 from flask import jsonify
 from flask import abort
-import math
+from helpers import *
 
 blueprint = flask.Blueprint('tasks', __name__, url_prefix='/api/tasks')
 
@@ -39,16 +39,17 @@ def task_item(task_id):
 
 @blueprint.route('/')
 def tasks_list():
-    tasks = search_tasks() or [] # """ implement search_records """
-
-    sort_param = flask.request.args.get('sort_by')
+    like_filters = filter_params(['name'])
+    equal_filters = filter_params(['status'])
+    sort_param = str(flask.request.args.get('sort_by'))
     page_number = int(flask.request.args.get('page_number')) or 0
     results_per_page = int(flask.request.args.get('results_per_page')) or 1
-    total_pages = math.ceil(len(tasks) / float(results_per_page))
 
-    tasks = sorted(tasks, key = lambda task: task[sort_param]) if sort_param else tasks
-    tasks_split_per_page = list(split_list_in_chunks(tasks, results_per_page))
-    tasks_per_page = tasks_split_per_page[page_number] if tasks else []
+    tasks = search_records(static_tasks, like_filters, equal_filters) or []
+    tasks = sort_records(tasks, sort_param)
+
+    total_pages = calc_total_pages(tasks, results_per_page)
+    tasks_per_page = calc_records_on_page_number(tasks, page_number, results_per_page)
 
     return jsonify({
         'tasks': tasks_per_page,
@@ -58,23 +59,6 @@ def tasks_list():
             'page_number': page_number,
             'results_per_page': results_per_page,
             'sort_by': sort_param,
-            'filters': filter_params()
+            'filters': like_filters + equal_filters
         }
     })
-
-
-def split_list_in_chunks(list, chunks):
-    for i in xrange(0, len(list), chunks):
-        yield list[i:i + chunks]
-
-def search_tasks():
-    result = []
-    for filter_param in filter_params():
-        if filter == 'status':
-            result += filter(lambda task: flask.request.args.get('status') == task['status'], static_tasks)
-        else:
-            result += filter(lambda task: flask.request.args.get(filter_param) in task[filter_param], static_tasks)
-            return result
-
-def filter_params():
-    return filter(lambda filter_param: filter_param in flask.request.args, ['name', 'status'])
