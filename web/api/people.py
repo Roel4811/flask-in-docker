@@ -43,13 +43,14 @@ def person_item(person_id):
 def people_list():
     like_filters = filter_params(['first_name', 'last_name'])
     equal_filters = filter_params(['email'])
-    sort_param = flask.request.args.get('sort_by')
-    sort_direction = str(flask.request.args.get('sort_direction'))
-    page_number = int(flask.request.args.get('page_number')) if flask.request.args.get('page_number') else 0
-    results_per_page = int(flask.request.args.get('results_per_page')) if flask.request.args.get('results_per_page') else 2
+
+    sort_by = flask.request.args.get('sort_by')
+    sort_direction = flask.request.args.get('sort_direction', default = 'asc', type = str)
+    page_number = flask.request.args.get('page_number', default = 1, type = int)
+    results_per_page = flask.request.args.get('results_per_page', default = 2, type = int)
 
     people = search_records(static_people, like_filters, equal_filters) or []
-    people = sort_records(people, sort_param, reverse = True if sort_direction == 'desc' else False)
+    people = sort_records(people, sort_by, reverse = True if sort_direction == 'desc' else False)
 
     total_pages = calc_total_pages(people, results_per_page)
     people_per_page = calc_records_on_page_number(people, page_number, results_per_page)
@@ -61,8 +62,9 @@ def people_list():
             'total_pages': total_pages,
             'page_number': page_number,
             'results_per_page': results_per_page,
-            'sort_by': sort_param,
+            'sort_by': sort_by,
             'sort_direction': sort_direction,
-            'filters': like_filters + equal_filters
+            'filters': like_filters + equal_filters,
+            'iso_time': get_time()
         }
     })
